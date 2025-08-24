@@ -28,14 +28,14 @@ function MatchRow({ match, teams }: { match: Group['matches'][number], teams: Gr
     >
       <Box flex={1} display="flex" flexDirection="column" justifyContent="center" gap={1}>
         <Box display="flex" gap={6} alignItems="center">
-          <Box>
-            <Typography>
+          <Box width={240}>
+            <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
               {team1?.player1.firstName}
               {' '}
               {team1?.player1.lastName}
             </Typography>
 
-            <Typography>
+            <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
               {team1?.player2.firstName}
               {' '}
               {team1?.player2.lastName}
@@ -68,14 +68,14 @@ function MatchRow({ match, teams }: { match: Group['matches'][number], teams: Gr
         <Divider />
 
         <Box display="flex" gap={6} alignItems="center">
-          <Box>
-            <Typography>
+          <Box width={240}>
+            <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
               {team2?.player1.firstName}
               {' '}
               {team2?.player1.lastName}
             </Typography>
 
-            <Typography>
+            <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
               {team2?.player2.firstName}
               {' '}
               {team2?.player2.lastName}
