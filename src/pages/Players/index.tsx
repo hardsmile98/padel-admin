@@ -7,13 +7,12 @@ import { useGetPlayersQuery } from 'services';
 import { useState } from 'react';
 import { type Players as PlayersType } from 'services';
 import PlayerRow from './PlayerRow';
-import AddPlayer from './AddPlayer';
-import EditPlayer from './EditPlayer';
+import AddOrEditPlayer from './AddOrEditPlayer';
 
 function Players() {
-  const [isAddPlayerOpen, setIsAddPlayerOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const [isEditPlayerOpen, setIsEditPlayerOpen] = useState(false);
+  const [type, setType] = useState<'add' | 'edit'>('add');
 
   const [player, setPlayer] = useState<PlayersType[number] | null>(null);
 
@@ -21,7 +20,8 @@ function Players() {
 
   const handleEditPlayer = (editedPlayer: PlayersType[number]) => {
     setPlayer(editedPlayer);
-    setIsEditPlayerOpen(true);
+    setType('edit');
+    setIsOpen(true);
   };
 
   return (
@@ -30,7 +30,10 @@ function Players() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setIsAddPlayerOpen(true)}
+          onClick={() => {
+            setType('add');
+            setIsOpen(true);
+          }}
         >
           Добавить игрока
         </Button>
@@ -67,15 +70,11 @@ function Players() {
         )}
       </Box>
 
-      <AddPlayer
-        open={isAddPlayerOpen}
-        onClose={() => setIsAddPlayerOpen(false)}
-      />
-
-      <EditPlayer
-        open={isEditPlayerOpen}
-        onClose={() => setIsEditPlayerOpen(false)}
+      <AddOrEditPlayer
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
         player={player}
+        type={type}
       />
     </>
   );

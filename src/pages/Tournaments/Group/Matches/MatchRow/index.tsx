@@ -4,6 +4,7 @@ import {
 } from '@mui/material';
 import { useDeleteMatchMutation, type Group } from 'services';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 function MatchRow({ match, teams }: { match: Group['matches'][number], teams: Group['teams'] }) {
   const team1 = teams?.find((team) => team.id === match.team1Id);
@@ -106,13 +107,21 @@ function MatchRow({ match, teams }: { match: Group['matches'][number], teams: Gr
         </Box>
       </Box>
 
-      <IconButton
-        color="error"
-        onClick={() => deleteMatch({ matchId: match.id })}
-        loading={isDeleting}
-      >
-        <DeleteIcon />
-      </IconButton>
+      <Box>
+        <IconButton
+          color="primary"
+        >
+          <EditIcon />
+        </IconButton>
+
+        <IconButton
+          color="error"
+          onClick={() => deleteMatch({ matchId: match.id })}
+          loading={isDeleting}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </Box>
     </Box>
   );
 }

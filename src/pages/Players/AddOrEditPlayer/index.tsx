@@ -12,16 +12,34 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useEffect, useState } from 'react';
-import { useEditPlayerMutation, type Players } from 'services';
+import { useAddPlayerMutation, useEditPlayerMutation, type Players } from 'services';
 
-type EditPlayerProps = {
+type AddOrEditPlayerProps = {
   open: boolean;
   onClose: () => void;
+  type: 'add' | 'edit';
   player: Players[number] | null;
 };
 
-function EditPlayer({ open, onClose, player }: EditPlayerProps) {
-  const [editPlayer, { isLoading, isSuccess, reset }] = useEditPlayerMutation();
+function AddOrEditPlayer({
+  open,
+  onClose,
+  type,
+  player,
+}: AddOrEditPlayerProps) {
+  const [addPlayer, {
+    isLoading: isAdding,
+    isSuccess: isAdded,
+    reset: resetAdding,
+  }] = useAddPlayerMutation();
+
+  const [editPlayer, {
+    isLoading: isEditing,
+    isSuccess: isEdited,
+    reset: resetEditing,
+  }] = useEditPlayerMutation();
+
+  const isLoading = isAdding || isEditing;
 
   const [form, setForm] = useState({
     slug: '',
@@ -34,21 +52,31 @@ function EditPlayer({ open, onClose, player }: EditPlayerProps) {
   });
 
   useEffect(() => {
-    if (player) {
+    if (player && type === 'edit') {
       setForm({
-        slug: player.slug,
-        firstName: player.firstName,
-        lastName: player.lastName,
-        raiting: player.raiting ? String(player.raiting) : '',
-        photoUrl: player.photoUrl,
-        avatarUrl: player.avatarUrl,
-        description: player.description,
+        slug: player.slug || '',
+        firstName: player.firstName || '',
+        lastName: player.lastName || '',
+        raiting: player.raiting ? player.raiting.toString() : '',
+        photoUrl: player.photoUrl || '',
+        avatarUrl: player.avatarUrl || '',
+        description: player.description || [''],
+      });
+    } else {
+      setForm({
+        slug: '',
+        firstName: '',
+        lastName: '',
+        raiting: '',
+        photoUrl: '',
+        avatarUrl: '',
+        description: [''],
       });
     }
-  }, [player]);
+  }, [player, type]);
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isAdded || isEdited) {
       setForm({
         slug: '',
         firstName: '',
@@ -61,9 +89,26 @@ function EditPlayer({ open, onClose, player }: EditPlayerProps) {
 
       onClose();
 
-      reset();
+      resetAdding();
+
+      resetEditing();
     }
-  }, [isSuccess]);
+  }, [isAdded, isEdited]);
+
+  const handleAddOrEditPlayer = () => {
+    if (type === 'add') {
+      addPlayer({
+        ...form,
+        raiting: Number(form.raiting),
+      });
+    } else {
+      editPlayer({
+        ...form,
+        raiting: Number(form.raiting),
+        id: player?.id ?? 0,
+      });
+    }
+  };
 
   return (
     <Dialog
@@ -84,7 +129,7 @@ function EditPlayer({ open, onClose, player }: EditPlayerProps) {
         alignItems: 'center',
       }}
       >
-        Редактировать игрока
+        {type === 'add' ? 'Добавить игрока' : 'Редактировать игрока'}
 
         <IconButton onClick={onClose}>
           <CloseIcon onClick={onClose} />
@@ -181,14 +226,10 @@ function EditPlayer({ open, onClose, player }: EditPlayerProps) {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => editPlayer({
-              ...form,
-              raiting: Number(form.raiting),
-              id: player?.id ?? 0,
-            })}
-            disabled={isLoading || !player}
+            onClick={handleAddOrEditPlayer}
+            disabled={isLoading}
           >
-            Сохранить
+            {type === 'add' ? 'Добавить' : 'Сохранить'}
           </Button>
         </Box>
       </DialogContent>
@@ -196,4 +237,4 @@ function EditPlayer({ open, onClose, player }: EditPlayerProps) {
   );
 }
 
-export default EditPlayer;
+export default AddOrEditPlayer;
