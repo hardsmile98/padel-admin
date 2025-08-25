@@ -103,7 +103,7 @@ function Categories({
               </Button>
             </Box>
 
-            {subCategories.length > 0 ? (
+            {categoryId && subCategories.length > 0 ? (
               <Tabs
                 sx={{ mb: 2 }}
                 value={subcategoryId ?? false}

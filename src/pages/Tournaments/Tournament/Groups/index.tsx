@@ -80,7 +80,7 @@ function Groups({
         open={addGroupOpen}
         onClose={() => setAddGroupOpen(false)}
         stageId={stageId}
-        categoryId={categoryId}
+        categoryId={category}
       />
     </>
   );

@@ -7,7 +7,7 @@ const addGroup = {
     categoryId: number | null;
     name: string;
   }) => ({
-    url: `api/tournaments/${data.tournamentId}/${data.stageId}/${data.categoryId}/create-group`,
+    url: `api/tournaments/${data.tournamentId}/${data.stageId}/create-group`,
     method: 'post',
     body: data,
   }),
