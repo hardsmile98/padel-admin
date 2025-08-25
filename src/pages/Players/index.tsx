@@ -5,13 +5,24 @@ import {
 } from '@mui/material';
 import { useGetPlayersQuery } from 'services';
 import { useState } from 'react';
+import { type Players as PlayersType } from 'services';
 import PlayerRow from './PlayerRow';
 import AddPlayer from './AddPlayer';
+import EditPlayer from './EditPlayer';
 
 function Players() {
   const [isAddPlayerOpen, setIsAddPlayerOpen] = useState(false);
 
+  const [isEditPlayerOpen, setIsEditPlayerOpen] = useState(false);
+
+  const [player, setPlayer] = useState<PlayersType[number] | null>(null);
+
   const { data: players, isLoading } = useGetPlayersQuery({});
+
+  const handleEditPlayer = (editedPlayer: PlayersType[number]) => {
+    setPlayer(editedPlayer);
+    setIsEditPlayerOpen(true);
+  };
 
   return (
     <>
@@ -31,10 +42,11 @@ function Players() {
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Slug</TableCell>
-                  <TableCell align="right">Имя</TableCell>
-                  <TableCell align="right">Фамилия</TableCell>
-                  <TableCell align="right">Рейтинг</TableCell>
+                  <TableCell>Автарка</TableCell>
+                  <TableCell align="left">Slug</TableCell>
+                  <TableCell align="left">Имя</TableCell>
+                  <TableCell align="left">Фамилия</TableCell>
+                  <TableCell align="left">Рейтинг</TableCell>
                   <TableCell align="right">Действия</TableCell>
                 </TableRow>
               </TableHead>
@@ -42,7 +54,11 @@ function Players() {
               {players && players.length > 0 && (
                 <TableBody>
                   {(players || [])?.map((row) => (
-                    <PlayerRow key={row.slug} player={row} />
+                    <PlayerRow
+                      key={row.slug}
+                      player={row}
+                      onEdit={handleEditPlayer}
+                    />
                   ))}
                 </TableBody>
               )}
@@ -54,6 +70,12 @@ function Players() {
       <AddPlayer
         open={isAddPlayerOpen}
         onClose={() => setIsAddPlayerOpen(false)}
+      />
+
+      <EditPlayer
+        open={isEditPlayerOpen}
+        onClose={() => setIsEditPlayerOpen(false)}
+        player={player}
       />
     </>
   );

@@ -32,6 +32,7 @@ export const publicApi = createApi({
     deleteTeam: builder.mutation(endpoints.deleteTeam),
     addMatch: builder.mutation(endpoints.addMatch),
     deleteMatch: builder.mutation(endpoints.deleteMatch),
+    editPlayer: builder.mutation(endpoints.editPlayer),
   }),
 
   tagTypes: Object.values(tagTypes),
@@ -58,6 +59,7 @@ export const {
   useDeleteTeamMutation,
   useAddMatchMutation,
   useDeleteMatchMutation,
+  useEditPlayerMutation,
 } = publicApi;
 
 export * from './endpoints';
