@@ -8,6 +8,7 @@ import {
 import { useState } from 'react';
 import type { Tournament } from 'services';
 import AddCategory from './AddCategory';
+import DeleteCategory from './DeleteCategory';
 
 function Categories({
   categories,
@@ -25,6 +26,9 @@ function Categories({
   setSubcategoryId: (subcategoryId: number | null) => void,
 }) {
   const [addCategoryOpen, setAddCategoryOpen] = useState(false);
+
+  const [deleteCategoryOpen, setDeleteCategoryOpen] = useState(false);
+  const [type, setType] = useState<'parent' | 'sub'>('parent');
 
   const [isSubcategory, setIsSubcategory] = useState(false);
 
@@ -51,13 +55,34 @@ function Categories({
           Лиги
         </Typography>
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setAddCategoryOpen(true)}
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: 2,
+        }}
         >
-          Добавить лигу
-        </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setAddCategoryOpen(true)}
+          >
+            Добавить лигу
+          </Button>
+
+          <Button
+            variant="contained"
+            color="error"
+            disabled={parentCategories.length === 0}
+            onClick={() => {
+              setType('parent');
+              setDeleteCategoryOpen(true);
+            }}
+          >
+            Удалить лигу
+          </Button>
+        </Box>
       </Box>
 
       <Box>
@@ -91,16 +116,37 @@ function Categories({
                 Подкатегории лиги
               </Typography>
 
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  setIsSubcategory(true);
-                  setAddCategoryOpen(true);
-                }}
+              <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: 2,
+              }}
               >
-                Добавить подкатегорию
-              </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    setIsSubcategory(true);
+                    setAddCategoryOpen(true);
+                  }}
+                >
+                  Добавить подкатегорию
+                </Button>
+
+                <Button
+                  variant="contained"
+                  color="error"
+                  disabled={subCategories.length === 0}
+                  onClick={() => {
+                    setType('sub');
+                    setDeleteCategoryOpen(true);
+                  }}
+                >
+                  Удалить подкатегорию
+                </Button>
+              </Box>
             </Box>
 
             {categoryId && subCategories.length > 0 ? (
@@ -136,6 +182,12 @@ function Categories({
         onClose={() => setAddCategoryOpen(false)}
         stageId={stageId}
         parentCategoryId={isSubcategory ? categoryId : null}
+      />
+
+      <DeleteCategory
+        open={deleteCategoryOpen}
+        onClose={() => setDeleteCategoryOpen(false)}
+        categories={type === 'parent' ? parentCategories : subCategories}
       />
     </>
   );

@@ -12,3 +12,6 @@ export * from './deleteTeam';
 export * from './deleteMatch';
 export * from './addMatch';
 export * from './editMatch';
+export * from './deleteGroup';
+export * from './deleteCategory';
+export * from './deleteStage';

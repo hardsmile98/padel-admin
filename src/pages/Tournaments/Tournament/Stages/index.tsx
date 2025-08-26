@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { type Tournament } from 'services';
 import AddStage from './AddStage';
 import SetActiveStage from './SetActiveStage';
+import DeleteStage from './DeleteStage';
 
 function Stages({
   stages,
@@ -18,6 +19,8 @@ function Stages({
   setStageId: (stageId: number | null) => void,
 }) {
   const [addStageOpen, setAddStageOpen] = useState(false);
+
+  const [deleteStageOpen, setDeleteStageOpen] = useState(false);
 
   const [setActiveStageOpen, setSetActiveStageOpen] = useState(false);
 
@@ -60,6 +63,15 @@ function Stages({
           >
             Выбрать активный
           </Button>
+
+          <Button
+            variant="contained"
+            color="error"
+            disabled={stages.length === 0}
+            onClick={() => setDeleteStageOpen(true)}
+          >
+            Удалить этап
+          </Button>
         </Box>
       </Box>
 
@@ -94,6 +106,12 @@ function Stages({
         onClose={() => setSetActiveStageOpen(false)}
         stages={stages}
         activeStage={activeStage || null}
+      />
+
+      <DeleteStage
+        open={deleteStageOpen}
+        onClose={() => setDeleteStageOpen(false)}
+        stages={stages}
       />
     </>
   );

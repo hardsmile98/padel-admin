@@ -7,6 +7,7 @@ import { useState } from 'react';
 import type { Tournament } from 'services';
 import { useNavigate, useParams } from 'react-router-dom';
 import AddGroup from './AddGroup';
+import DeleteGroup from './DeleteGroup';
 
 function Groups({
   groups,
@@ -24,6 +25,8 @@ function Groups({
   const navigate = useNavigate();
 
   const [addGroupOpen, setAddGroupOpen] = useState(false);
+
+  const [deleteGroupOpen, setDeleteGroupOpen] = useState(false);
 
   const category = subcategoryId ?? categoryId;
 
@@ -46,13 +49,24 @@ function Groups({
           Группы
         </Typography>
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setAddGroupOpen(true)}
-        >
-          Добавить группу
-        </Button>
+        <Box display="flex" gap={2}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setAddGroupOpen(true)}
+          >
+            Добавить группу
+          </Button>
+
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => setDeleteGroupOpen(true)}
+            disabled={groupsByStageAndCategory.length === 0}
+          >
+            Удалить группу
+          </Button>
+        </Box>
       </Box>
 
       <Box sx={{
@@ -81,6 +95,12 @@ function Groups({
         onClose={() => setAddGroupOpen(false)}
         stageId={stageId}
         categoryId={category}
+      />
+
+      <DeleteGroup
+        open={deleteGroupOpen}
+        onClose={() => setDeleteGroupOpen(false)}
+        groups={groupsByStageAndCategory}
       />
     </>
   );
