@@ -6,7 +6,13 @@ import { useDeleteMatchMutation, type Group } from 'services';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-function MatchRow({ match, teams }: { match: Group['matches'][number], teams: Group['teams'] }) {
+function MatchRow({
+  match,
+  teams,
+  onEdit,
+}: {
+  match: Group['matches'][number], teams: Group['teams'], onEdit: (match: Group['matches'][number]) => void;
+}) {
   const team1 = teams?.find((team) => team.id === match.team1Id);
 
   const team2 = teams?.find((team) => team.id === match.team2Id);
@@ -110,6 +116,7 @@ function MatchRow({ match, teams }: { match: Group['matches'][number], teams: Gr
       <Box>
         <IconButton
           color="primary"
+          onClick={() => onEdit(match)}
         >
           <EditIcon />
         </IconButton>

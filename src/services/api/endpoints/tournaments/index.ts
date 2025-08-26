@@ -11,3 +11,4 @@ export * from './addTeam';
 export * from './deleteTeam';
 export * from './deleteMatch';
 export * from './addMatch';
+export * from './editMatch';

@@ -1,11 +1,21 @@
 import { Box, Button, Typography } from '@mui/material';
 import type { Group } from 'services';
 import { useState } from 'react';
-import AddMatch from './AddMatch';
+import AddOrEditMatch from './AddOrEditMatch';
 import MatchRow from './MatchRow';
 
 function Matches({ matches, teams }: { matches: Group['matches'], teams: Group['teams'] }) {
-  const [addMatchOpen, setAddMatchOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [matchSelected, setMatchSelected] = useState<Group['matches'][number] | null>(null);
+
+  const [type, setType] = useState<'add' | 'edit'>('add');
+
+  const handleEditMatch = (match: Group['matches'][number]) => {
+    setMatchSelected(match);
+    setType('edit');
+    setIsOpen(true);
+  };
 
   return (
     <>
@@ -23,7 +33,10 @@ function Matches({ matches, teams }: { matches: Group['matches'], teams: Group['
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setAddMatchOpen(true)}
+          onClick={() => {
+            setType('add');
+            setIsOpen(true);
+          }}
         >
           Добавить матч
         </Button>
@@ -31,7 +44,12 @@ function Matches({ matches, teams }: { matches: Group['matches'], teams: Group['
 
       <Box display="flex" flexDirection="column" gap={2}>
         {matches && matches.length > 0 ? matches.map((match) => (
-          <MatchRow key={match.id} match={match} teams={teams} />
+          <MatchRow
+            key={match.id}
+            match={match}
+            teams={teams}
+            onEdit={handleEditMatch}
+          />
         )) : (
           <Typography color="text.secondary">
             Нет сыгранных матчей в группе
@@ -39,9 +57,11 @@ function Matches({ matches, teams }: { matches: Group['matches'], teams: Group['
         )}
       </Box>
 
-      <AddMatch
-        open={addMatchOpen}
-        onClose={() => setAddMatchOpen(false)}
+      <AddOrEditMatch
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        match={matchSelected}
+        type={type}
         teams={teams ?? []}
       />
     </>

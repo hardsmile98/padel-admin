@@ -32,6 +32,7 @@ export const publicApi = createApi({
     deleteTeam: builder.mutation(endpoints.deleteTeam),
     addMatch: builder.mutation(endpoints.addMatch),
     deleteMatch: builder.mutation(endpoints.deleteMatch),
+    editMatch: builder.mutation(endpoints.editMatch),
     editPlayer: builder.mutation(endpoints.editPlayer),
   }),
 
@@ -59,6 +60,7 @@ export const {
   useDeleteTeamMutation,
   useAddMatchMutation,
   useDeleteMatchMutation,
+  useEditMatchMutation,
   useEditPlayerMutation,
 } = publicApi;
 
