@@ -5,7 +5,7 @@ import {
   Tabs,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Tournament } from 'services';
 import AddCategory from './AddCategory';
 import DeleteCategory from './DeleteCategory';
@@ -40,6 +40,30 @@ function Categories({
     (category) => category.stageId === stageId && category.parentCategoryId === categoryId,
   );
 
+  useEffect(() => {
+    if (categories.length > 0) {
+      const categoryFinded = categories.find((category) => category.id === categoryId);
+
+      if (!categoryId || categoryFinded === undefined) {
+        setCategoryId(categories[0].id);
+      }
+    } else if (categoryId) {
+      setCategoryId(null);
+    }
+  }, [categories, categoryId]);
+
+  useEffect(() => {
+    if (subCategories.length > 0) {
+      const subcategoryFinded = subCategories.find((category) => category.id === subcategoryId);
+
+      if (!subcategoryId || subcategoryFinded === undefined) {
+        setSubcategoryId(subCategories[0].id);
+      }
+    } else if (subcategoryId) {
+      setSubcategoryId(null);
+    }
+  }, [subCategories, subcategoryId]);
+
   return (
     <>
       <Box sx={{
@@ -66,7 +90,10 @@ function Categories({
           <Button
             variant="contained"
             color="primary"
-            onClick={() => setAddCategoryOpen(true)}
+            onClick={() => {
+              setIsSubcategory(false);
+              setAddCategoryOpen(true);
+            }}
           >
             Добавить лигу
           </Button>

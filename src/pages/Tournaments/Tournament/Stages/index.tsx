@@ -27,8 +27,14 @@ function Stages({
   const activeStage = stages.find((stage) => stage.id === activeStageId);
 
   useEffect(() => {
-    if (stages.length > 0 && !stageId) {
-      setStageId(stages[0].id);
+    if (stages.length > 0) {
+      const stageFinded = stages.find((stage) => stage.id === stageId);
+
+      if (!stageId || stageFinded === undefined) {
+        setStageId(stages[0].id);
+      }
+    } else if (stageId) {
+      setStageId(null);
     }
   }, [stages, stageId]);
 

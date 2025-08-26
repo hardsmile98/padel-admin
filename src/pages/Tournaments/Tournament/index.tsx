@@ -67,35 +67,17 @@ function Tournament() {
   }, [data]);
 
   const changeStage = (selectedStageId: number | null) => {
-    setData((prev) => {
-      const categoryId = tournament?.categories
-        .find((category) => category.stageId === selectedStageId)?.id ?? null;
-
-      const subcategoryId = categoryId
-        ? tournament?.categories
-          .find((category) => category.parentCategoryId === categoryId)?.id ?? null
-        : null;
-
-      return {
-        ...prev,
-        stageId: selectedStageId,
-        categoryId,
-        subcategoryId,
-      };
-    });
+    setData((prev) => ({
+      ...prev,
+      stageId: selectedStageId,
+    }));
   };
 
   const changeCategory = (selectedCategoryId: number | null) => {
-    setData((prev) => {
-      const subcategoryId = tournament?.categories
-        .find((category) => category.parentCategoryId === selectedCategoryId)?.id ?? null;
-
-      return {
-        ...prev,
-        categoryId: selectedCategoryId,
-        subcategoryId,
-      };
-    });
+    setData((prev) => ({
+      ...prev,
+      categoryId: selectedCategoryId,
+    }));
   };
 
   const changeSubcategory = (selectedSubcategoryId: number | null) => {
