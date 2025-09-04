@@ -18,6 +18,8 @@ import { useAddMatchMutation, useEditMatchMutation, type Group } from 'services'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+const isValidScore = (s: string) => s !== '' && Number(s) >= 0;
+
 function AddOrEditMatch({
   open,
   onClose,
@@ -55,56 +57,46 @@ function AddOrEditMatch({
 
   const isDisabled = form.team1Id === ''
   || form.team2Id === ''
-  || form.sets.some(([score1, score2], index) => {
-    const team1Score = score1 === '' ? null : Number(score1);
-    const team2Score = score2 === '' ? null : Number(score2);
-
-    if (form.sets.length - 1 === index) {
-      return (
-        (team1Score === null) !== (team2Score === null)
-        || (team1Score ?? 0) < 0
-        || (team2Score ?? 0) < 0
-      );
-    }
-
-    if (
-      team1Score === null
-      || team2Score === null
-      || team1Score < 0
-      || team2Score < 0) {
-      return true;
-    }
-
-    return false;
-  });
+  || !(
+    form.sets.every(([a, b]) => a === '' && b === '')
+    || (form.sets.slice(0, 2).every(([a, b]) => isValidScore(a) && isValidScore(b))
+    && form.sets[2].every((s) => s === ''))
+    || form.sets.every(([a, b]) => isValidScore(a) && isValidScore(b))
+  );
 
   const handle = () => {
-    const result = form.sets.reduce(
-      (acc, set) => {
-        const [t1, t2] = set;
+    const isEmpty = form.sets.every(([a, b]) => a === '' && b === '');
 
-        const t1Score = t1 === '' ? null : Number(t1);
+    let winnerId;
 
-        const t2Score = t2 === '' ? null : Number(t2);
+    if (!isEmpty) {
+      const result = form.sets.reduce(
+        (acc, set) => {
+          const [t1, t2] = set;
 
-        if (t1Score === null || t2Score === null) {
+          const t1Score = t1 === '' ? null : Number(t1);
+
+          const t2Score = t2 === '' ? null : Number(t2);
+
+          if (t1Score === null || t2Score === null) {
+            return acc;
+          }
+
+          if (t1Score > t2Score) {
+            acc.team1 += 1;
+          } else {
+            acc.team2 += 1;
+          }
+
           return acc;
-        }
+        },
+        { team1: 0, team2: 0 },
+      );
 
-        if (t1Score > t2Score) {
-          acc.team1 += 1;
-        } else {
-          acc.team2 += 1;
-        }
-
-        return acc;
-      },
-      { team1: 0, team2: 0 },
-    );
-
-    const winnerId = result.team1 > result.team2
-      ? +form.team1Id
-      : +form.team2Id;
+      winnerId = result.team1 > result.team2
+        ? +form.team1Id
+        : +form.team2Id;
+    }
 
     if (type === 'add') {
       addMatch({

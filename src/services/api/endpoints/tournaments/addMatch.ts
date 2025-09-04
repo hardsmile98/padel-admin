@@ -6,7 +6,7 @@ const addMatch = {
     team1Id: number;
     team2Id: number;
     sets: string[];
-    winnerId: number;
+    winnerId?: number;
   }) => ({
     url: `api/tournaments/groups/${data.groupId}/create-match`,
     method: 'post',
