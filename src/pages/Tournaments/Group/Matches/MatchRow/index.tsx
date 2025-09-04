@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/no-array-index-key */
 import {
   Box, Divider, IconButton, Typography,
@@ -61,13 +62,17 @@ function MatchRow({
             })}
           </Box>
 
-          {winner === team1?.id ? (
+          { winner !== null ? winner === team1?.id ? (
             <Box sx={{ color: 'success.main' }}>
               W
             </Box>
           ) : (
             <Box sx={{ color: 'error.main' }}>
               L
+            </Box>
+          ) : (
+            <Box>
+              -
             </Box>
           )}
         </Box>
@@ -101,13 +106,17 @@ function MatchRow({
             })}
           </Box>
 
-          {winner === team2?.id ? (
+          {winner !== null ? winner === team2?.id ? (
             <Box sx={{ color: 'success.main' }}>
               W
             </Box>
           ) : (
             <Box sx={{ color: 'error.main' }}>
               L
+            </Box>
+          ) : (
+            <Box>
+              -
             </Box>
           )}
         </Box>
