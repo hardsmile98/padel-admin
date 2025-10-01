@@ -18,10 +18,12 @@ function DeleteGroup({
   open,
   onClose,
   groups,
+  isFinal,
 }: {
   open: boolean,
   onClose: () => void,
   groups: Tournament['groups'],
+  isFinal: boolean,
 }) {
   const [form, setForm] = useState({
     groupId: '',
@@ -58,7 +60,7 @@ function DeleteGroup({
         alignItems: 'center',
       }}
       >
-        Удалить лигу или подкатегорию
+        {`Удалить ${isFinal ? 'этап финала' : 'группу'}`}
 
         <IconButton onClick={onClose}>
           <CloseIcon onClick={onClose} />
@@ -74,7 +76,10 @@ function DeleteGroup({
         }}
         >
           <FormControl fullWidth>
-            <InputLabel>Группа</InputLabel>
+            <InputLabel>
+              {isFinal ? 'Этап финала' : 'Группа'}
+            </InputLabel>
+
             <Select
               label="Группа"
               value={form.groupId}

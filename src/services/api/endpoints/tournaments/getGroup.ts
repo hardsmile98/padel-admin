@@ -25,6 +25,14 @@ export type GetGroupResponse = {
       lastName: string;
     };
   }[];
+  stage: {
+    id: number;
+    tournamentId: number;
+    name: string;
+    order: number;
+    isFinal: boolean;
+    createdAt: string;
+  };
   matches: {
     id: number;
     groupId: number;

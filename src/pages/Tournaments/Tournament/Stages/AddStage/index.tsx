@@ -6,6 +6,8 @@ import {
   Box,
   IconButton,
   Button,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useState } from 'react';
@@ -16,6 +18,7 @@ function AddStage({ open, onClose }: { open: boolean, onClose: () => void }) {
   const [form, setForm] = useState({
     name: '',
     order: '1',
+    isFinal: false,
   });
 
   const isDisabled = !form.name || !form.order;
@@ -33,6 +36,7 @@ function AddStage({ open, onClose }: { open: boolean, onClose: () => void }) {
       setForm({
         name: '',
         order: '1',
+        isFinal: false,
       });
     }
   }, [isSuccess]);
@@ -76,6 +80,20 @@ function AddStage({ open, onClose }: { open: boolean, onClose: () => void }) {
             onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
 
+          <FormControlLabel
+            control={(
+              <Checkbox
+                checked={form.isFinal}
+                onChange={(e) => setForm({
+                  ...form,
+                  ...form,
+                  isFinal: e.target.checked,
+                })}
+              />
+            )}
+            label="Финальный этап"
+          />
+
           <TextField
             label="Порядок отображения"
             type="number"
@@ -91,6 +109,7 @@ function AddStage({ open, onClose }: { open: boolean, onClose: () => void }) {
             onClick={() => addStage({
               tournamentId: Number(tournamentId),
               name: form.name,
+              isFinal: form.isFinal,
               order: Number(form.order),
             })}
             loading={isLoading}

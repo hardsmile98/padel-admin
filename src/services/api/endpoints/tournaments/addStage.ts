@@ -3,6 +3,7 @@ import tagTypes from 'services/api/tagTypes';
 const addStage = {
   query: (data: {
     tournamentId: number;
+    isFinal: boolean;
     name: string;
     order: number;
   }) => ({

@@ -15,6 +15,10 @@ function Group() {
 
   const { data, isLoading, isError } = useGetGroupQuery(Number(groupId));
 
+  const stage = data?.stage;
+
+  const isFinal = stage?.isFinal;
+
   if (isError) {
     return <Box>Ошибка при загрузке группы</Box>;
   }
@@ -35,11 +39,15 @@ function Group() {
 
             <Divider sx={{ my: 2 }} />
 
-            <Box mb={3}>
-              <Teams teams={data?.teams || []} />
-            </Box>
+            {!isFinal && (
+              <>
+                <Box mb={3}>
+                  <Teams teams={data?.teams || []} />
+                </Box>
 
-            <Divider sx={{ my: 2 }} />
+                <Divider sx={{ my: 2 }} />
+              </>
+            )}
 
             <Box>
               <Matches

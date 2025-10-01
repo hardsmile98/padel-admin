@@ -37,6 +37,8 @@ export const publicApi = createApi({
     deleteGroup: builder.mutation(endpoints.deleteGroup),
     deleteCategory: builder.mutation(endpoints.deleteCategory),
     deleteStage: builder.mutation(endpoints.deleteStage),
+    getCategoryTeams: builder.query(endpoints.getCategoryTeams),
+    addCategoryTeam: builder.mutation(endpoints.addCategoryTeam),
   }),
 
   tagTypes: Object.values(tagTypes),
@@ -68,6 +70,8 @@ export const {
   useDeleteGroupMutation,
   useDeleteCategoryMutation,
   useDeleteStageMutation,
+  useGetCategoryTeamsQuery,
+  useAddCategoryTeamMutation,
 } = publicApi;
 
 export * from './endpoints';

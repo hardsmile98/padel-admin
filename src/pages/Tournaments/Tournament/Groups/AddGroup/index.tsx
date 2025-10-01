@@ -17,11 +17,13 @@ function AddGroup({
   onClose,
   stageId,
   categoryId,
+  isFinal,
 }: {
   open: boolean,
   onClose: () => void,
   stageId: number,
   categoryId: number | null,
+  isFinal: boolean,
 }) {
   const [form, setForm] = useState({
     name: '',
@@ -62,7 +64,7 @@ function AddGroup({
         alignItems: 'center',
       }}
       >
-        Добавить группу
+        {`Добавить ${isFinal ? 'этап финала' : 'группу'}`}
 
         <IconButton onClick={onClose}>
           <CloseIcon onClick={onClose} />
@@ -78,7 +80,7 @@ function AddGroup({
         }}
         >
           <TextField
-            label="Название группы"
+            label={`Название ${isFinal ? 'этапа финала' : 'группы'}`}
             fullWidth
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}

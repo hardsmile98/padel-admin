@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import Stages from './Stages';
 import Categories from './Categories';
 import Groups from './Groups';
+import CategoryTeam from './CategoryTeam';
 
 function Tournament() {
   const { search, pathname } = useLocation();
@@ -37,6 +38,8 @@ function Tournament() {
   const { id } = useParams();
 
   const { data: tournament, isLoading, isError } = useGetTournamentQuery(Number(id));
+
+  const currentStage = tournament?.stages.find((stage) => stage.id === data.stageId);
 
   useEffect(() => {
     if (data.stageId !== null) {
@@ -86,6 +89,8 @@ function Tournament() {
       subcategoryId: selectedSubcategoryId,
     }));
   };
+
+  const category = data.subcategoryId ?? data.categoryId;
 
   if (isError) {
     return <Box>Ошибка при загрузке турнира</Box>;
@@ -140,7 +145,14 @@ function Tournament() {
                   stageId={data.stageId}
                   categoryId={data.categoryId}
                   subcategoryId={data.subcategoryId}
+                  isFinal={currentStage?.isFinal ?? false}
                 />
+              </Box>
+            )}
+
+            {currentStage?.isFinal && category && (
+              <Box mb={3}>
+                <CategoryTeam categoryId={category} />
               </Box>
             )}
           </Box>

@@ -3,6 +3,7 @@ const tagTypes = {
   tournaments: 'tournaments',
   tournament: 'tournament',
   group: 'group',
+  categoryTeams: 'categoryTeams',
 };
 
 export default tagTypes;

@@ -8,7 +8,7 @@ const deleteTeam = {
     method: 'post',
   }),
 
-  invalidatesTags: [tagTypes.group],
+  invalidatesTags: [tagTypes.group, tagTypes.categoryTeams],
 };
 
 export {

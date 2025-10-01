@@ -14,11 +14,13 @@ function Groups({
   stageId,
   categoryId,
   subcategoryId,
+  isFinal,
 }: {
   groups: Tournament['groups'],
   stageId: number,
   categoryId: number | null,
   subcategoryId: number | null,
+  isFinal: boolean,
 }) {
   const { id: tournamentId } = useParams();
 
@@ -46,7 +48,7 @@ function Groups({
       }}
       >
         <Typography variant="h6">
-          Группы
+          {isFinal ? 'Этап финала' : 'Группы'}
         </Typography>
 
         <Box display="flex" gap={2}>
@@ -55,7 +57,7 @@ function Groups({
             color="primary"
             onClick={() => setAddGroupOpen(true)}
           >
-            Добавить группу
+            {`Добавить ${isFinal ? 'этап финала' : 'группу'}`}
           </Button>
 
           <Button
@@ -64,7 +66,7 @@ function Groups({
             onClick={() => setDeleteGroupOpen(true)}
             disabled={groupsByStageAndCategory.length === 0}
           >
-            Удалить группу
+            {`Удалить ${isFinal ? 'этап финала' : 'группу'}`}
           </Button>
         </Box>
       </Box>
@@ -95,12 +97,14 @@ function Groups({
         onClose={() => setAddGroupOpen(false)}
         stageId={stageId}
         categoryId={category}
+        isFinal={isFinal}
       />
 
       <DeleteGroup
         open={deleteGroupOpen}
         onClose={() => setDeleteGroupOpen(false)}
         groups={groupsByStageAndCategory}
+        isFinal={isFinal}
       />
     </>
   );

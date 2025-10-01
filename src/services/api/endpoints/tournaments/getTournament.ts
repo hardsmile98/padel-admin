@@ -13,6 +13,7 @@ export type GetTournamentResponse = {
     tournamentId: number;
     name: string;
     order: number;
+    isFinal: boolean;
     createdAt: string;
   }[];
   categories: {

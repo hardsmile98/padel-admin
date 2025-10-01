@@ -15,3 +15,5 @@ export * from './editMatch';
 export * from './deleteGroup';
 export * from './deleteCategory';
 export * from './deleteStage';
+export * from './getCategoryTeams';
+export * from './addCategoryTeam';
