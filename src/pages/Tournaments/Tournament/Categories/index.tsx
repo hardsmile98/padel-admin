@@ -41,11 +41,11 @@ function Categories({
   );
 
   useEffect(() => {
-    if (categories.length > 0) {
-      const categoryFinded = categories.find((category) => category.id === categoryId);
+    if (parentCategories.length > 0) {
+      const categoryFinded = parentCategories.find((category) => category.id === categoryId);
 
       if (!categoryId || categoryFinded === undefined) {
-        setCategoryId(categories[0].id);
+        setCategoryId(parentCategories[0].id);
       }
     } else if (categoryId) {
       setCategoryId(null);
