@@ -37,7 +37,9 @@ function Categories({
   );
 
   const subCategories = categories.filter(
-    (category) => category.stageId === stageId && category.parentCategoryId === categoryId,
+    (category) => categoryId !== null
+      && category.stageId === stageId
+      && category.parentCategoryId === categoryId,
   );
 
   useEffect(() => {
@@ -50,7 +52,7 @@ function Categories({
     } else if (categoryId) {
       setCategoryId(null);
     }
-  }, [categories, categoryId]);
+  }, [stageId, categories, categoryId]);
 
   useEffect(() => {
     if (subCategories.length > 0) {
@@ -62,7 +64,7 @@ function Categories({
     } else if (subcategoryId) {
       setSubcategoryId(null);
     }
-  }, [subCategories, subcategoryId]);
+  }, [stageId, subCategories, subcategoryId]);
 
   return (
     <>
