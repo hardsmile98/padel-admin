@@ -73,6 +73,8 @@ function Tournament() {
     setData((prev) => ({
       ...prev,
       stageId: selectedStageId,
+      categoryId: null,
+      subcategoryId: null,
     }));
   };
 
@@ -80,6 +82,7 @@ function Tournament() {
     setData((prev) => ({
       ...prev,
       categoryId: selectedCategoryId,
+      subcategoryId: null,
     }));
   };
 
