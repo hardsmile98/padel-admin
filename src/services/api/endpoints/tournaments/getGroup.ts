@@ -40,6 +40,7 @@ export type GetGroupResponse = {
     team2Id: number;
     sets: string[];
     winnerId: number | null;
+    order: number;
     createdAt: string;
   }[];
 };

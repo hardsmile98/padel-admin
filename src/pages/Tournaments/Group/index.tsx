@@ -53,6 +53,7 @@ function Group() {
               <Matches
                 matches={data?.matches || []}
                 teams={data?.teams || []}
+                isFinal={isFinal ?? false}
               />
             </Box>
           </Box>

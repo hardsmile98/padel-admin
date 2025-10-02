@@ -7,6 +7,7 @@ const editMatch = {
     sets: string[];
     winnerId?: number;
     matchId: number;
+    order?: number;
   }) => ({
     url: 'api/tournaments/matches/update',
     method: 'post',

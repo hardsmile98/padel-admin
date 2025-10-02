@@ -4,7 +4,7 @@ import { useState } from 'react';
 import AddOrEditMatch from './AddOrEditMatch';
 import MatchRow from './MatchRow';
 
-function Matches({ matches, teams }: { matches: Group['matches'], teams: Group['teams'] }) {
+function Matches({ matches, teams, isFinal }: { matches: Group['matches'], teams: Group['teams'], isFinal: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const [matchSelected, setMatchSelected] = useState<Group['matches'][number] | null>(null);
@@ -63,6 +63,7 @@ function Matches({ matches, teams }: { matches: Group['matches'], teams: Group['
         match={matchSelected}
         type={type}
         teams={teams ?? []}
+        isFinal={isFinal}
       />
     </>
   );

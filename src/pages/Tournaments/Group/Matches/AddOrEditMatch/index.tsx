@@ -26,12 +26,14 @@ function AddOrEditMatch({
   teams,
   match,
   type,
+  isFinal,
 }: {
   open: boolean;
   onClose: () => void;
   teams: Group['teams'];
   match: Group['matches'][number] | null;
   type: 'add' | 'edit';
+  isFinal: boolean;
 }) {
   const [editMatch, {
     isLoading: isEditing,
@@ -53,6 +55,7 @@ function AddOrEditMatch({
     team1Id: '',
     team2Id: '',
     sets: [['', ''], ['', ''], ['', '']],
+    order: '0',
   });
 
   const isDisabled = form.team1Id === ''
@@ -105,6 +108,9 @@ function AddOrEditMatch({
         team2Id: +form.team2Id,
         sets: form.sets.map((set) => set.join('-')),
         winnerId,
+        order: isFinal
+          ? +form.order
+          : undefined,
       });
     } else {
       editMatch({
@@ -113,6 +119,9 @@ function AddOrEditMatch({
         team2Id: +form.team2Id,
         sets: form.sets.map((set) => set.join('-')),
         winnerId,
+        order: isFinal
+          ? +form.order
+          : undefined,
       });
     }
   };
@@ -123,12 +132,14 @@ function AddOrEditMatch({
         team1Id: match.team1Id.toString(),
         team2Id: match.team2Id.toString(),
         sets: match.sets.map((set) => set.split('-')),
+        order: match.order.toString(),
       });
     } else {
       setForm({
         team1Id: '',
         team2Id: '',
         sets: [['', ''], ['', ''], ['', '']],
+        order: '0',
       });
     }
   }, [match, type]);
@@ -143,6 +154,7 @@ function AddOrEditMatch({
         team1Id: '',
         team2Id: '',
         sets: [['', ''], ['', ''], ['', '']],
+        order: '0',
       });
 
       onClose();
@@ -383,6 +395,22 @@ function AddOrEditMatch({
               Оставьте поля третьего сета пустыми, если сет не был сыгран и победа была за 2 сета.
             </Typography>
           </Box>
+
+          {isFinal && (
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                label="Порядок отображения"
+                type="number"
+                fullWidth
+                value={form.order}
+                onChange={(e) => setForm({ ...form, order: e.target.value })}
+              />
+
+              <Typography variant="caption" color="text.secondary">
+                Первым идет матч с меньшим порядковым номером
+              </Typography>
+            </Box>
+          )}
 
           <Button
             variant="contained"
