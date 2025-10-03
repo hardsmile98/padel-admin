@@ -22,9 +22,18 @@ export type GetCategoryTeamsResponse = {
 const transformResponse = (response: GetCategoryTeamsResponse) => (response);
 
 const getCategoryTeams = {
-  query: (categoryId: number) => ({
+  query: ({
+    categoryId,
+    type,
+  }: {
+    categoryId: number
+    type?: string
+  }) => ({
     url: `api/tournaments/categories/${categoryId}/teams`,
     method: 'get',
+    params: {
+      type,
+    },
   }),
 
   providesTags: [tagTypes.categoryTeams],

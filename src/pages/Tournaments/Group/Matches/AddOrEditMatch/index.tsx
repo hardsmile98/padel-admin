@@ -27,6 +27,7 @@ function AddOrEditMatch({
   match,
   type,
   isFinal,
+  isExtra,
 }: {
   open: boolean;
   onClose: () => void;
@@ -34,6 +35,7 @@ function AddOrEditMatch({
   match: Group['matches'][number] | null;
   type: 'add' | 'edit';
   isFinal: boolean;
+  isExtra: boolean
 }) {
   const [editMatch, {
     isLoading: isEditing,
@@ -110,6 +112,9 @@ function AddOrEditMatch({
         winnerId,
         order: isFinal
           ? +form.order
+          : undefined,
+        type: isExtra
+          ? 'extra'
           : undefined,
       });
     } else {

@@ -48,9 +48,10 @@ export type GetGroupResponse = {
 const transformResponse = (response: GetGroupResponse) => (response);
 
 const getGroup = {
-  query: (groupId: number) => ({
+  query: ({ groupId, type }: { groupId: number, type?: string }) => ({
     url: `api/tournaments/groups/${groupId}`,
     method: 'get',
+    params: { type },
   }),
 
   providesTags: [tagTypes.group],

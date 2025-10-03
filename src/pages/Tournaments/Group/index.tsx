@@ -13,7 +13,7 @@ import Matches from './Matches';
 function Group() {
   const { groupId } = useParams();
 
-  const { data, isLoading, isError } = useGetGroupQuery(Number(groupId));
+  const { data, isLoading, isError } = useGetGroupQuery({ groupId: Number(groupId) });
 
   const stage = data?.stage;
 

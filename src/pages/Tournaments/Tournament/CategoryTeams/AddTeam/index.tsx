@@ -18,10 +18,12 @@ function AddTeam({
   open,
   onClose,
   categoryId,
+  isExtra,
 }: {
   open: boolean;
   onClose: () => void;
   categoryId: number;
+  isExtra: boolean;
 }) {
   const [form, setForm] = useState({
     player1Id: '',
@@ -116,6 +118,7 @@ function AddTeam({
                     categoryId: Number(categoryId),
                     player1Id: +form.player1Id,
                     player2Id: +form.player2Id,
+                    type: isExtra ? 'extra' : undefined,
                   })}
                   loading={isAdding}
                 >

@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import Stages from './Stages';
 import Categories from './Categories';
 import Groups from './Groups';
-import CategoryTeam from './CategoryTeam';
+import CategoryTeams from './CategoryTeams';
 
 function Tournament() {
   const { search, pathname } = useLocation();
@@ -155,7 +155,7 @@ function Tournament() {
 
             {currentStage?.isFinal && category && (
               <Box mb={3}>
-                <CategoryTeam categoryId={category} />
+                <CategoryTeams categoryId={category} />
               </Box>
             )}
           </Box>
