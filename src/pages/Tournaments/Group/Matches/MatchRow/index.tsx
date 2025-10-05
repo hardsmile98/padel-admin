@@ -36,19 +36,25 @@ function MatchRow({
     >
       <Box flex={1} display="flex" flexDirection="column" justifyContent="center" gap={1}>
         <Box display="flex" gap={6} alignItems="center">
-          <Box width={240}>
-            <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
-              {team1?.player1.firstName}
-              {' '}
-              {team1?.player1.lastName}
-            </Typography>
+          {team1 ? (
+            <Box width={240}>
+              <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
+                {team1?.player1.firstName}
+                {' '}
+                {team1?.player1.lastName}
+              </Typography>
 
-            <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
-              {team1?.player2.firstName}
-              {' '}
-              {team1?.player2.lastName}
-            </Typography>
-          </Box>
+              <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
+                {team1?.player2.firstName}
+                {' '}
+                {team1?.player2.lastName}
+              </Typography>
+            </Box>
+          ) : (
+            <Box width={240}>
+              Команда не выбрана
+            </Box>
+          )}
 
           <Box display="flex" flexDirection="row" gap={2}>
             {match.sets.map((set, index) => {
@@ -80,19 +86,25 @@ function MatchRow({
         <Divider />
 
         <Box display="flex" gap={6} alignItems="center">
-          <Box width={240}>
-            <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
-              {team2?.player1.firstName}
-              {' '}
-              {team2?.player1.lastName}
-            </Typography>
+          {team2 ? (
+            <Box width={240}>
+              <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
+                {team2?.player1.firstName}
+                {' '}
+                {team2?.player1.lastName}
+              </Typography>
 
-            <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
-              {team2?.player2.firstName}
-              {' '}
-              {team2?.player2.lastName}
-            </Typography>
-          </Box>
+              <Typography textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
+                {team2?.player2.firstName}
+                {' '}
+                {team2?.player2.lastName}
+              </Typography>
+            </Box>
+          ) : (
+            <Box width={240}>
+              Команда не выбрана
+            </Box>
+          )}
 
           <Box display="flex" flexDirection="row" gap={2}>
             {match.sets.map((set, index) => {

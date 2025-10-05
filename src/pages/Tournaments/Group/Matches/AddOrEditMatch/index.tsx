@@ -54,8 +54,8 @@ function AddOrEditMatch({
   const { groupId } = useParams();
 
   const [form, setForm] = useState({
-    team1Id: '',
-    team2Id: '',
+    team1Id: 'empty',
+    team2Id: 'empty',
     sets: [['', ''], ['', ''], ['', '']],
     order: '0',
   });
@@ -134,15 +134,15 @@ function AddOrEditMatch({
   useEffect(() => {
     if (match && type === 'edit') {
       setForm({
-        team1Id: match.team1Id.toString(),
-        team2Id: match.team2Id.toString(),
+        team1Id: match.team1Id ? match.team1Id.toString() : 'empty',
+        team2Id: match.team2Id ? match.team2Id.toString() : 'empty',
         sets: match.sets.map((set) => set.split('-')),
         order: match.order.toString(),
       });
     } else {
       setForm({
-        team1Id: '',
-        team2Id: '',
+        team1Id: 'empty',
+        team2Id: 'empty',
         sets: [['', ''], ['', ''], ['', '']],
         order: '0',
       });
@@ -156,8 +156,8 @@ function AddOrEditMatch({
       resetEditMatch();
 
       setForm({
-        team1Id: '',
-        team2Id: '',
+        team1Id: 'empty',
+        team2Id: 'empty',
         sets: [['', ''], ['', ''], ['', '']],
         order: '0',
       });
@@ -200,6 +200,12 @@ function AddOrEditMatch({
               value={form.team1Id}
               onChange={(e) => setForm({ ...form, team1Id: e.target.value })}
             >
+              {isFinal && (
+                <MenuItem value="empty">
+                  Не выбрана
+                </MenuItem>
+              )}
+
               {teams.map((team) => (
                 <MenuItem
                   key={team.id}
@@ -225,6 +231,12 @@ function AddOrEditMatch({
               value={form.team2Id}
               onChange={(e) => setForm({ ...form, team2Id: e.target.value })}
             >
+              {isFinal && (
+                <MenuItem value="empty">
+                  Не выбрана
+                </MenuItem>
+              )}
+
               {teams.map((team) => (
                 <MenuItem
                   key={team.id}
