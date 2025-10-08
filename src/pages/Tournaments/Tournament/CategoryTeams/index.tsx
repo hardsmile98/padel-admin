@@ -84,7 +84,7 @@ function CategoryTeams({ categoryId }: { categoryId: number }) {
           mb={2}
         >
           <Typography variant="h6">
-            Команды за 9-16 место (
+            Команды нижнего плей-офф (
             {extraTeams.length}
             )
           </Typography>

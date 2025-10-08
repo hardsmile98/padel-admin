@@ -101,7 +101,7 @@ function Matches({
             mt={5}
           >
             <Typography variant="h6">
-              Сыгранные матчи за 9-16 место
+              Сыгранные матчи в нижней части плей-офф
             </Typography>
 
             <Button
@@ -135,7 +135,7 @@ function Matches({
                   />
                 )) : (
                   <Typography color="text.secondary">
-                    Нет сыгранных матчей в группе за 9-16 место
+                    Нет сыгранных матчей в нижней части плей-офф
                   </Typography>
                 )}
               </Box>
